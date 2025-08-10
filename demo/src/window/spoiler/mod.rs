@@ -36,31 +36,34 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            self.drop_target
-                .connect_drop(clone!(@to-owned self as imp, #[upgrade_or] false, move,
-                    |_, value, _, _ | {
-                        let Ok(file_list) = value.get::<gdk::FileList>() else { return false; };
+            self.drop_target.connect_drop(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                #[upgrade_or]
+                false,
+                move |_, value, _, _| {
+                    let Ok(file_list) = value.get::<gdk::FileList>() else {
+                        return false;
+                    };
 
-                        let files = file_list.files();
+                    let files = file_list.files();
 
-                        if let Some(picture) = imp.spoiler
-                            .child()
-                            .and_downcast::<gtk::Picture>() {
-                                picture.set_file(files.first());
-                                imp.spoiler.refresh_blur();
-                        } else {
-                            let picture = gtk::Picture::for_file(files.first().unwrap());
-                            picture.set_content_fit(gtk::ContentFit::Cover);
-                            imp.spoiler.set_child(Some(&picture));
-                        }
-
-                        if !imp.spoiler.hidden() {
-                            imp.spoiler.set_hidden(true);
-                        }
-
-                        true
+                    if let Some(picture) = imp.spoiler.child().and_downcast::<gtk::Picture>() {
+                        picture.set_file(files.first());
+                        imp.spoiler.refresh_blur();
+                    } else {
+                        let picture = gtk::Picture::for_file(files.first().unwrap());
+                        picture.set_content_fit(gtk::ContentFit::Cover);
+                        imp.spoiler.set_child(Some(&picture));
                     }
-                ));
+
+                    if !imp.spoiler.hidden() {
+                        imp.spoiler.set_hidden(true);
+                    }
+
+                    true
+                }
+            ));
         }
     }
 
@@ -78,5 +81,5 @@ mod imp {
 
 glib::wrapper! {
     pub struct SpoilerPage(ObjectSubclass<imp::SpoilerPage>)
-        @extends adw::Bin, gtk::Widget;
+        @extends adw::Bin, gtk::Widget, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }

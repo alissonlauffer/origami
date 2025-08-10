@@ -35,5 +35,5 @@ mod imp {
 
 glib::wrapper! {
     pub struct LoadingIndicatorPage(ObjectSubclass<imp::LoadingIndicatorPage>)
-        @extends adw::Bin, gtk::Widget;
+        @extends adw::Bin, gtk::Widget, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }

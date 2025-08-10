@@ -106,7 +106,7 @@ glib::wrapper! {
     /// # Properties
     /// * progress: [f64] between 0 and 1
     pub struct LoadingIndicator(ObjectSubclass<imp::LoadingIndicator>)
-        @extends gtk::Widget;
+        @extends gtk::Widget, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }
 
 impl LoadingIndicator {

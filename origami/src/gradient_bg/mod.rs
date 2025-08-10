@@ -153,7 +153,7 @@ mod imp {
                 texture
             };
 
-            snapshot.append_texture(&texture, &bounds);
+            snapshot.append_texture(&texture, bounds);
         }
 
         fn snapshot_pattern(&self, snapshot: &gtk::Snapshot, bounds: &graphene::Rect) {
@@ -211,7 +211,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct GradientBg(ObjectSubclass<imp::GradientBg>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::Bin, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }
 
 impl GradientBg {

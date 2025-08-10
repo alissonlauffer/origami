@@ -94,7 +94,7 @@ mod imp {
                 graphene::Rect::new(win_bounds.x() + shift, win_bounds.y(), GRADIENT_WIDTH, 1.0);
 
             let mut color1 = widget.color();
-            let mut color2 = color1.clone();
+            let mut color2 = color1;
             color1.set_alpha(0.6);
             color2.set_alpha(0.3);
 
@@ -125,7 +125,7 @@ glib::wrapper! {
     /// * playing: [bool].
     /// Controls whether to display the effect
     pub struct ShimmerEffect(ObjectSubclass<imp::ShimmerEffect>)
-        @extends adw::Bin, gtk::Widget;
+        @extends adw::Bin, gtk::Widget, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }
 
 impl ShimmerEffect {

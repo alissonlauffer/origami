@@ -30,5 +30,5 @@ mod imp {
 
 glib::wrapper! {
     pub struct ShimmerEffectPage(ObjectSubclass<imp::ShimmerEffectPage>)
-        @extends adw::Bin, gtk::Widget;
+        @extends adw::Bin, gtk::Widget, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }

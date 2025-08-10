@@ -56,8 +56,7 @@ mod imp {
                 gradient_bg,
                 #[upgrade_or]
                 false,
-                move,
-                |_, value, _, _| {
+                move |_, value, _, _| {
                     let Ok(file_list) = value.get::<gdk::FileList>() else {
                         return false;
                     };
@@ -89,7 +88,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct GradientBgPage(ObjectSubclass<imp::GradientBgPage>)
-        @extends adw::Bin, gtk::Widget;
+        @extends adw::Bin, gtk::Widget, gtk::ConstraintTarget, gtk::Buildable, gtk::Accessible;
 }
 
 fn hard_coded_theme_colors(dark: bool) -> &'static [i32] {
